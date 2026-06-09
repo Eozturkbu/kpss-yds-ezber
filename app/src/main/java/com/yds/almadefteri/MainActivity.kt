@@ -1,4 +1,4 @@
-SSSSpackage com.yds.almadefteri
+package com.yds.almadefteri
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
