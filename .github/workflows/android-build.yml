@@ -1,0 +1,37 @@
+name: Android APK Build
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Projeyi indir
+        uses: actions/checkout@v4
+
+      - name: Java 17 kur
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Gradle cache kullan
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Gradle izni ver
+        run: chmod +x ./gradlew
+
+      - name: APK üret
+        run: ./gradlew assembleDebug --no-configuration-cache --stacktrace
+
+      - name: APK dosyasını yükle
+        uses: actions/upload-artifact@v4
+        with:
+          name: kpss-yds-ezber-apk
+          path: app/build/outputs/apk/debug/*.apk
